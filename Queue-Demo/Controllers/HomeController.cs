@@ -10,8 +10,6 @@ namespace Queue_Demo.Controllers
 {
     public class HomeController : Controller
     {
-        string hubUrl = "[YOUR_HUB_URL]";
-
         public ActionResult Index()
         {
             return View();
@@ -19,7 +17,7 @@ namespace Queue_Demo.Controllers
 
         public ActionResult Broadcast()
         {
-            var conn = new HubConnection(hubUrl);
+            var conn = new HubConnection(Queue_Demo.Settings.hubUrl);
 
             var hub = conn.CreateProxy("queue");
             

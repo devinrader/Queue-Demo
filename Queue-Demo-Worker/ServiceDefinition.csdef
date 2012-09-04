@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="Queue_Demo_Worker" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2012-05.1.7">
-  <WorkerRole name="WorkerRole1" vmsize="Small">
+  <WorkerRole name="Queue-Demo-Worker" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>

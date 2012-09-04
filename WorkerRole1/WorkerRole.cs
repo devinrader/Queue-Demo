@@ -11,17 +11,13 @@ using Microsoft.WindowsAzure.StorageClient;
 using SignalR.Client.Hubs;
 using Twilio;
 
-namespace WorkerRole1
+namespace Queue_Demo_Worker
 {
     public class WorkerRole : RoleEntryPoint
     {
-        string accountSid = "[YOUR_ACCOUNT_SID]";
-        string authToken = "[YOUR_AUTH_TOKEN]";
-        string hubUrl = "[YOUR_HUB_URL]";
-
         public override void Run()
         {
-            var client = new TwilioRestClient(accountSid, authToken);
+            var client = new TwilioRestClient(Queue_Demo.Settings.accountSid, Queue_Demo.Settings.authToken);
 
             var queue = client.ListQueues().Queues.Where(q => q.FriendlyName == "Demo Queue").FirstOrDefault();
                 
@@ -29,7 +25,7 @@ namespace WorkerRole1
             {
                 var queueSid = queue.Sid;
 
-                var conn = new HubConnection(hubUrl);
+                var conn = new HubConnection(Queue_Demo.Settings.hubUrl);
                 var hub = conn.CreateProxy("Queue");
 
                 conn.Start();

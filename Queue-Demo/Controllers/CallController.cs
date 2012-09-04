@@ -13,9 +13,6 @@ namespace Queue_Demo.Controllers
 {
     public class CallController : TwilioController
     {
-        string accountSid = "[YOUR_ACCOUNT_SID]";
-        string authToken = "[YOUR_AUTH_TOKEN]";
-
         public ActionResult QueueCall()
         {
             var response = new TwilioResponse();
@@ -44,7 +41,7 @@ namespace Queue_Demo.Controllers
 
         public ActionResult LeaveQueue(string QueueSid)
         {
-            var client = new TwilioRestClient(accountSid, authToken);
+            var client = new TwilioRestClient(Queue_Demo.Settings.accountSid, Queue_Demo.Settings.authToken);
 
             var queue  = client.GetQueue(QueueSid);
 
