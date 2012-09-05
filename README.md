@@ -5,7 +5,7 @@ With the launch of Twilios new Queue functionality, its never been easier to bui
 
 This sample demonstrates how to use the new Queue functionallity to place incoming calls into a call queue, as well as build a web dashboard that shows call queue stats.
 
-![](https://github.com/devinrader/queue-demo/queuedash.png "Queue Dashboard")
+![](https://github.com/devinrader/Queue-Demo/blob/master/queuedash.png "Queue Dashboard")
 
 Check out a live demo of this sample at http://twilio-queue.azurewebsites.net/
 
