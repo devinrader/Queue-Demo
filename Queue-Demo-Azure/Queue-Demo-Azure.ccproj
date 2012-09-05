@@ -43,7 +43,7 @@
     <PublishProfile Include="Profiles\QueueWorkerProduction.azurePubxml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorkerRole1\Queue-Demo-Worker.csproj">
+    <ProjectReference Include="..\Queue-Demo-Worker\Queue-Demo-Worker.csproj">
       <Name>Queue-Demo-Worker</Name>
       <Project>{71ed6c34-fcf8-41db-ba01-3d1d2b074e3e}</Project>
       <Private>True</Private>
