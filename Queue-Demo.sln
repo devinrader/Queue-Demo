@@ -16,8 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{00AABA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1493EC4B-E41A-4CD8-8BE1-03DF2A5A6E64}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\queuedash.png = ..\..\queuedash.png
 		README.md = README.md
+		queuedash.png = queuedash.png
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queue-Demo-Settings", "Queue-Demo-Settings\Queue-Demo-Settings.csproj", "{CC7D99E3-7898-4A49-8141-88D41D2E656D}"
