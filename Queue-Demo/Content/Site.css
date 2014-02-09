@@ -1,76 +1,42 @@
-body
-{
-    padding: 40px;
-    font-size: .85em;
-    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
+body {
+    padding-top: 70px;
+    padding-bottom: 20px;
 }
 
-header,
-footer,
-nav,
-section {
-    display: block;
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-/* Styles for basic forms
------------------------------------------------------------*/
-
-fieldset 
-{
-    border:1px solid #ddd;
-    padding:0 1.4em 1.4em 1.4em;
-    margin:0 0 1.5em 0;
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
 }
 
-legend 
-{
-    font-size:1.2em;
-    font-weight: bold;
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
 }
 
-textarea 
-{
-    min-height: 75px;
-}
-
-.editor-label 
-{
-    margin: 1em 0 0 0;
-}
-
-.editor-field 
-{
-    margin:0.5em 0 0 0;
-}
-
-
-/* Styles for validation helpers
------------------------------------------------------------*/
-.field-validation-error
-{
-    color: #ff0000;
-}
-
-.field-validation-valid
-{
+.field-validation-valid {
     display: none;
 }
 
-.input-validation-error
-{
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
+input.input-validation-error {
+    border: 1px solid #b94a48;
 }
 
-.validation-summary-errors
-{
-    font-weight: bold;
-    color: #ff0000;
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
 }
 
-.validation-summary-valid
-{
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
     display: none;
 }

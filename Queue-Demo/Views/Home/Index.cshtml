@@ -2,33 +2,26 @@
     ViewBag.Title = "Index";
 }
 
-<script src="@Url.Content("~/Scripts/json2.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/highcharts.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.signalR-0.5.3.min.js")" type="text/javascript"></script>
+
+@section Scripts {
+
+@Scripts.Render("~/bundles/chart")
+@Scripts.Render("~/bundles/signalr")
+
 <script src="/signalr/hubs" type="text/javascript"></script>
-
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.min.css")" />
-
 <script type="text/javascript">
     var sizeChart;
     var waitChart;
-    var sizeStack = [],
-                time = (new Date()).getTime(),
-                i;
-    var waitStack = [],
-                time = (new Date()).getTime(),
-                i;
+    var sizeStack = [], time = (new Date()).getTime(), i;
+    var waitStack = [], time = (new Date()).getTime(), i;
 
     var maxStackSize = 20;
 
     $(function () {
-        var conn = $.hubConnection(), 
-            queue = conn.createProxy("queue");
+        var queueHub = $.connection.queue;
+        $.connection.logging = true;
 
-        conn.logging = true;
-        conn.start();
-
-        queue.on('reportQueueSize', function (currentSize) {
+        queueHub.client.reportQueueSize = function (currentSize) {
 
             //if (sizeStack.count>=maxStackSize){
             //    sizeStack[0].pop();
@@ -42,22 +35,51 @@
             sizeChart.get('sizeData').setData(sizeStack);
 
             $('#currentSize').text(currentSize);
-        });
+        };
 
-        queue.on('reportAverageWait', function (waitTime) {
+        //reportQueueSize = function (waitTime) {
 
             //if (waitStack.count >= maxStackSize) {
             //    waitStack[0].pop();
             //}
 
-            waitStack.push({
-                x: (new Date()).getTime(),
-                y: parseInt(waitTime)
-            });
+//        };
 
-            waitChart.get('waitData').setData(waitStack);
+        $.connection.hub.start().done(function () {
 
-            $('#waitTime').text(waitTime);
+            var timer = setInterval(function () {
+
+                console.log('starting avg wait callback');
+
+                queueHub.server.reportAverageWait().done(function (result) {
+
+                    console.log('    callback complete: ' + result);
+
+                    var point = {
+                        x: (new Date()).getTime(),
+                        y: parseInt(result)
+                    };
+
+                    waitStack.push(point);
+
+                    console.log('    point.x: ' + point.x);
+                    console.log('    point.y: ' + point.y);
+
+                    console.log('    waitstack: ' + waitStack.length);
+
+                    waitChart.get('waitData').setData(waitStack);
+
+                    $('#waitTime').text(result);
+                    $('#waitTimeStatus').text('the last value was: ' + result);
+                }).fail(function (e) {
+
+                    console.log('    callback fail: ' + e);
+
+                    clearInterval(timer);  //stop the interval
+                    $('#waitTimeStatus').text(e);
+                });
+
+            }, 3000);
         });
 
         sizeChart = new Highcharts.Chart({
@@ -129,24 +151,28 @@
         });
         waitChart.get('waitData').setData(waitStack);
     });
-      
 </script>
+}
 
-<div class="container">
-    <a href="https://github.com/devinrader/Queue-Demo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-    <div class="hero-unit">
+<div class="row">
+    <div class="col-md-12">
         <p>Give it a try.  Call <strong>1-314-403-7634</strong> to be placed in the queue.</p>
         <p>From the UK, you can dial <strong>+44 020 3322 3082</strong></p>
-        <h1>Queue Size: <span id="currentSize">0</span></h1>
-        <h1>Average Wait: <span id="waitTime">0</span></h1>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-6" style="text-align:center"><h1>Queue Size: <span id="currentSize">0</span></h1></div>
+    <div class="col-md-6" style="text-align:center"><h1>Average Wait: <span id="waitTime">0</span></h1></div>
+</div>
 
-<div class="container">
-    <div class="row">
-        <div class="span6" id="sizeChart" style="height: 400px"></div>
-        <div class="span6" id="waitChart" style="height: 400px"></div>
-    </div>
+<div class="row">
+    <div class="col-md-6" id="sizeChart" style="height: 400px"></div>
+    <div class="col-md-6" id="waitChart" style="height: 400px"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-6" style="text-align:center"></div>
+    <div class="col-md-6" style="text-align:center"><span id="waitTimeStatus">fetching latest wait time...</span></div>
 </div>
 
 

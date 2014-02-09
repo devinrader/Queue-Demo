@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SignalR.Client.Hubs;
 using Twilio;
 
 namespace Queue_Demo.Controllers
@@ -17,15 +16,15 @@ namespace Queue_Demo.Controllers
 
         public ActionResult Broadcast()
         {
-            var conn = new HubConnection(Queue_Demo.Settings.hubUrl);
+            //var conn = new HubConnection(Queue_Demo.Settings.HubUrl);
 
-            var hub = conn.CreateProxy("queue");
+            //var hub = conn.CreateProxy("queue");
             
-            var waitTime = "1000";
+            //var waitTime = "1000";
 
-            conn.Start().Wait();
+            //conn.Start().Wait();
             
-            hub.Invoke("ReportAverageWait", new object[] { waitTime });
+            //hub.Invoke("ReportAverageWait", new object[] { waitTime });
 
             return new EmptyResult();
         }

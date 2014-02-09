@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SignalR;
 using Twilio;
 using Twilio.TwiML;
 using Twilio.TwiML.Mvc;
@@ -25,13 +25,12 @@ namespace Queue_Demo.Controllers
             return TwiML(response);
         }
 
-
         public ActionResult WaitInQueue(string CurrentQueueSize, string QueuePosition)
         {
             var response = new TwilioResponse();
 
             var context = GlobalHost.ConnectionManager.GetHubContext<Hubs.QueueHub>();
-            context.Clients.reportQueueSize(CurrentQueueSize);
+            context.Clients.All.reportQueueSize(CurrentQueueSize);
 
             response.Say(string.Format("You are number {0} in the queue.  Please hold.", QueuePosition));
             response.Play("http://demo.brooklynhacker.com/music/ramones.mp3");
@@ -41,18 +40,17 @@ namespace Queue_Demo.Controllers
 
         public ActionResult LeaveQueue(string QueueSid)
         {
-            var client = new TwilioRestClient(Queue_Demo.Settings.accountSid, Queue_Demo.Settings.authToken);
+            var client = new TwilioRestClient(Queue_Demo.Settings.AccountSid, Queue_Demo.Settings.AuthToken);
 
             var queue  = client.GetQueue(QueueSid);
 
             if (queue.RestException == null)
             {
                 var context = GlobalHost.ConnectionManager.GetHubContext<Hubs.QueueHub>();
-                context.Clients.reportQueueSize(queue.CurrentSize);
+                context.Clients.All.reportQueueSize(queue.CurrentSize);
             }
             return new EmptyResult();
         }
-
 
         public ActionResult Dial()
         {
