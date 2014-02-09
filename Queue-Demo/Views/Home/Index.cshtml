@@ -19,7 +19,6 @@
 
     $(function () {
         var queueHub = $.connection.queue;
-        $.connection.logging = true;
 
         queueHub.client.reportQueueSize = function (currentSize) {
 
@@ -45,6 +44,7 @@
 
 //        };
 
+        $.connection.hub.logging = true;
         $.connection.hub.start().done(function () {
 
             var timer = setInterval(function () {

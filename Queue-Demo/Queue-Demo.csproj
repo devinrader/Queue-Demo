@@ -177,6 +177,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Properties\PublishProfiles\contactcenter - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\contactcenter - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\twilio-queue - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\twilio-queue - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
