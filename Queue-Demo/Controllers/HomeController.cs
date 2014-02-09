@@ -9,8 +9,22 @@ namespace Queue_Demo.Controllers
 {
     public class HomeController : Controller
     {
+        static string ApplicationSid = "[YOUR_TWIML_APP_SID]";
+        
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Agent(string id)
+        {
+            var capability = new TwilioCapability(Settings.AccountSid, Settings.AuthToken);
+
+            capability.AllowClientIncoming(id);
+            capability.AllowClientOutgoing(ApplicationSid);
+
+            ViewBag.token = capability.GenerateToken();
+
             return View();
         }
 

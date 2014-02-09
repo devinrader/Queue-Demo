@@ -52,6 +52,11 @@ namespace Queue_Demo.Controllers
             return new EmptyResult();
         }
 
+        /// <summary>
+        /// Action Method that returns the TwiML needed to connect an 'Agent' to the first call in the Queue
+        /// </summary>
+        /// <remarks>This method also includes the 'url' parameter in the generated TwiML.  This allows you to provide a URL that can return TwiML that will be executed to the dequeued caller as a Whisper</remarks>
+        /// <returns></returns>
         public ActionResult Dial()
         {
             var response = new TwilioResponse();

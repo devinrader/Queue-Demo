@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Agent";
+}
+
+@section Scripts {
+
+    <script type="text/javascript" src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
+    <script type="text/javascript">
+
+        Twilio.Device.setup('@ViewBag.token');
+
+        Twilio.Device.ready(function (device) {
+            $("#log").text("Ready");
+        });
+
+        Twilio.Device.error(function (error) {
+            $("#log").text("Error: " + error.message);
+        });
+
+        Twilio.Device.connect(function (conn) {
+            $("#log").text("Successfully established call");
+        });
+
+        Twilio.Device.disconnect(function (conn) {
+            $("#log").text("Call ended");
+        });
+
+        Twilio.Device.incoming(function (conn) {
+            $("#log").text("Incoming connection from " + conn.parameters.From);
+            // accept the incoming connection and start two-way audio
+            conn.accept();
+        });
+
+        function call() {
+            Twilio.Device.connect();
+        }
+
+        function hangup() {
+            Twilio.Device.disconnectAll();
+        }
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <button class="btn" onclick="call();">
+            Call Queue
+        </button>
+
+        <button class="btn" onclick="hangup();">
+            Hangup
+        </button>
+
+        <div id="log">Loading pigeons...</div>
+
+    </div>
+</div>
